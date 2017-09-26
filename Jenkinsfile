@@ -1,9 +1,20 @@
 pipeline {
-    agent { docker 'maven:3.3.3' }
+    agent any 
+
     stages {
-        stage('build') {
+        stage('Build') { 
+            steps { 
+                sh 'docker build -t wire-test .' 
+            }
+        }
+        stage('Test'){
             steps {
-                sh 'mvn --version'
+                sh 'make check' 
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'make publish'
             }
         }
     }
